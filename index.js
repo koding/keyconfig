@@ -1,6 +1,6 @@
 var _ = require('underscore');
 var keymapset = require('./lib/keymapset');
-var _inherits = require('./lib/inherits-underscore');
+var _inherits = require('inherits-underscore');
 
 module.exports = keyconfig;
 _inherits(keyconfig.prototype);

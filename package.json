@@ -5,9 +5,9 @@
   "description": "stores keyboard shortcut configurations",
   "main": "index.js",
   "dependencies": {
-    "fletcher": "0.0.3",
-    "underscore": "^1.7.0",
-    "yields-keycode": "^1.1.0"
+    "inherits-underscore": "^0.1.0",
+    "keycode-checksum": "^0.1.0",
+    "underscore": "^1.7.0"
   },
   "devDependencies": {
     "browserify": "^8.1.0",
@@ -18,6 +18,6 @@
   "scripts": {
     "test": "tape test/*.js"
   },
-  "author": "Onur Gunduz <ogunduz@gmail.com> (http://onurgunduz.com/)",
+  "author": "Onur Gunduz <onur@koding.com>",
   "license": "MIT"
 }

@@ -1,6 +1,6 @@
 var test = require('tape');
 var keymapset = require('../lib/keymapset');
-var checksum = require('../lib/checksum');
+var checksum = require('keycode-checksum');
 
 var models = [
   {
