@@ -1,0 +1,23 @@
+{
+  "name": "keyconfig",
+  "version": "0.1.0",
+  "private": true,
+  "description": "stores keyboard shortcut configurations",
+  "main": "index.js",
+  "dependencies": {
+    "fletcher": "0.0.3",
+    "underscore": "^1.7.0",
+    "yields-keycode": "^1.1.0"
+  },
+  "devDependencies": {
+    "browserify": "^8.1.0",
+    "bundle-collapser": "^1.1.1",
+    "tape": "^3.0.3",
+    "uglify-js": "^2.4.16"
+  },
+  "scripts": {
+    "test": "tape test/*.js"
+  },
+  "author": "Onur Gunduz <ogunduz@gmail.com> (http://onurgunduz.com/)",
+  "license": "MIT"
+}
