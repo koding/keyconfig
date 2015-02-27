@@ -1,7 +1,6 @@
 {
   "name": "keyconfig",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.1.1",
   "description": "stores keyboard shortcut configurations",
   "main": "index.js",
   "dependencies": {
