@@ -1,7 +1,7 @@
-# keyconfig
+#keyconfig
 
 stores keyboard shortcut configurations.
 
-# license
+#license
 
 mit
