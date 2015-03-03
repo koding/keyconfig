@@ -32,19 +32,19 @@ class Collection extends events.EventEmitter
 
     if collisions.length
       if model.readonly then  throw new Error  "dup: #{model.name}"
-    else
-      collisions = collisions.map (x) ->
-        return checksum.indexOf x
+      else
+        collisions = collisions.map (x) ->
+          return checksum.indexOf x
 
-      binding = model.binding
+        binding = model.binding
 
-      ix = if platform is 'Win' then 0 else 1
-      binding[ix] = binding[ix].filter (x, i) ->
-        return !~collisions.indexOf i
+        ix = if platform is 'Win' then 0 else 1
+        binding[ix] = binding[ix].filter (x, i) ->
+          return !~collisions.indexOf i
 
-      model.update binding: binding
+        model.update binding: binding
 
-    return model
+      return model
 
 
   _validate: (model) ->
