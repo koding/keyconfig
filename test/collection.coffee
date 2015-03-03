@@ -1,4 +1,5 @@
 Collection = require '../lib/collection'
+checksum = require 'keycode-checksum'
 
 describe 'Collection', ->
 
@@ -18,6 +19,9 @@ describe 'Collection', ->
 
     collection = new Collection 'x', fixture.collection
     collection.models[2].binding.should.eql [[ 'z+x' ], [] ]
+    collection.models[2].getWinChecksum().should.have.lengthOf 1
+    collection.models[2].getMacChecksum().should.have.lengthOf 0
+    collection.models[2].getWinChecksum().should.eql checksum ['x+z']
 
   it 'should throw readonly dups', ->
 
