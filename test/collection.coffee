@@ -1,19 +1,30 @@
-fixture = require './proxy-underscore.json'
 Collection = require '../lib/collection'
-Keyconfig = require '../lib'
 
 describe 'Collection', ->
 
-  it 'should proxy to underscore', () ->
+  it 'should proxy underscore methods', ->
     
+    fixture = require './proxy-underscore.json'
+
     collection = new Collection 'x', fixture.models
 
     foo = collection.filter readonly: yes
     foo.should.have.lengthOf 1
     foo[0].name.should.eql 'x'
 
-    bar = new Keyconfig fixture.collections
-    baz = bar.filter name: 'y'
+  it 'should omit dups', ->
     
-    baz.should.have.lengthOf 1
-    baz[0].name.should.eql 'y'
+    fixture = require './omit-dups.json'
+
+    collection = new Collection 'x', fixture.collection
+    collection.models[2].binding.should.eql [[ 'z+x' ], [] ]
+
+  it 'should throw readonly dups', ->
+
+    fixture = require './throw-readonly-dups.json'
+
+    collection = new Collection 'x'
+    collection.add fixture.models[0]
+    collection.add fixture.models[1]
+
+    collection.add.bind(collection, (fixture.models[2])).should.throw /dup/
