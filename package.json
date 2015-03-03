@@ -24,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tetsuo/keyconfig.git"
+    "url": "https://github.com/koding/keyconfig.git"
   },
   "keywords": [
     "keyhub",
@@ -33,7 +33,7 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tetsuo/keyconfig/issues"
+    "url": "https://github.com/koding/keyconfig/issues"
   },
-  "homepage": "https://github.com/tetsuo/keyconfig"
+  "homepage": "https://github.com/koding/keyconfig"
 }
