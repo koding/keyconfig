@@ -2,18 +2,27 @@
 
 stores shortcut configuration sets.
 
-```
-npm i keyconfig 
+# usage
+
+```js
+var keyconfig = new Keyconfig({
+  x: [ 
+    { 
+      name: 'foo', 
+      binding: [ [ 'ctrl+z' ], [ 'cmd+z' ] ]
+    } 
+  ]
+});
 ```
 
-# spec
+# configuration spec
 
 A configuration object has keymap sets (`Collection`) defined at top-level which each of them includes keymap (`Model`) definitions.
 
-```json
+```
 {
-  "editor": [...],
-  "terminal": [...]
+  "editor": [ ... ],
+  "terminal": [ ... ]
 }
 ```
 
@@ -55,23 +64,19 @@ Proxies [underscore](http://underscorejs.org) methods.
 
 # Collection(name, models=[])
 
-- `.add(model)`
-- `.toJSON()`
+## .add(model)
+## .toJSON()
 
 Proxies [underscore](http://underscorejs.org) methods.
 
 # Model(opts={})
 
-- `.update(value={})`
-- `.getWinKeys()`
-- `.getMacKeys()`
-- `.getWinChecksum()`
-- `.getMacChecksum()`
-- `.toJSON()`
-
-# events
-
-- `update`
+## .update(value={})
+## .getWinKeys()
+## .getMacKeys()
+## .getWinChecksum()
+## .getMacChecksum()
+## .toJSON()
 
 # license
 
