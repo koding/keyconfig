@@ -32,7 +32,7 @@ class Model extends events.EventEmitter
     @binding = @binding.map (x) ->
       return nub [].concat(x).filter(Boolean)
 
-    @emit 'update'
+    @emit 'change'
 
     return this
 
