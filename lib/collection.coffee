@@ -58,6 +58,9 @@ class Collection extends events.EventEmitter
   add: (model) ->
 
     model = new Model model  unless model instanceof Model
+    model.on 'change', =>
+      @emit 'change', model
+
     @models.push(@_validate model)
 
     return this
