@@ -1,4 +1,9 @@
 
+0.3.1 / 2015-03-04
+==================
+
+ * do not filter falsy binding sets
+
 0.3.0 / 2015-03-04
 ==================
 
@@ -13,15 +18,15 @@
 0.2.1 / 2015-03-04
 ==================
 
- * added usage example
- * added .gitignore
- * tested entry
- * tested dups
- * fixed indentation typo
- * moved repo to koding/keyconfig
+ * add usage example
+ * add .gitignore
+ * test entry
+ * test dups
+ * fix indentation typo
+ * move repo to koding/keyconfig
 
 0.2.0 / 2015-03-02
 ==================
 
- * ported to coffee-script
- * added spec doc
+ * port to coffeescript
+ * add documentation
