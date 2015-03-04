@@ -1,6 +1,6 @@
 # keyconfig
 
-stores shortcut definitions.
+stores keyboard shortcut definitions.
 
 # usage
 
@@ -64,6 +64,8 @@ When set, keyconfig will throw an error if it encounters a binding collision; ot
 ## .add(model)
 ## .toJSON()
 
+`Keyconfig` and `Collection` instances also proxy underscore methods.
+
 # Model(value={})
 
 ## .update(value={})
@@ -73,8 +75,7 @@ When set, keyconfig will throw an error if it encounters a binding collision; ot
 ## .getMacChecksum()
 ## .toJSON()
 
-* `Keyconfig` and `Collection` instances also proxy underscore methods.
-* Updating a model triggers `change` event that bubble up.
+Updating a model triggers `change` event that bubble up.
 
 # license
 
