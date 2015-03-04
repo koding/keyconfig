@@ -22,7 +22,7 @@ class Model extends events.EventEmitter
 
     @description = defined value.description, @description, null
     @binding     = defined value.binding, @binding
-    @binding     = [].concat(@binding).filter(Boolean)
+    @binding     = [].concat(@binding)[..1]
     @readonly    = defined value.readonly, @readonly, false
     @options     = defined value.options, @options
 
