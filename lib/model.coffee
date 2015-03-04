@@ -8,24 +8,23 @@ module.exports =
 
 class Model extends events.EventEmitter
 
-  constructor: (opts={}) ->
+  constructor: (value={}) ->
 
-    throw new Error 'missing name'  unless opts.name
+    throw new Error 'missing name'  unless value.name
 
-    @name = opts.name
-    @update opts
+    @name = value.name
+    @update value
 
     super()
 
 
-  update: (opts) ->
+  update: (value) ->
 
-    @description = defined opts.description, @description, null
-    @binding     = defined opts.binding, @binding
+    @description = defined value.description, @description, null
+    @binding     = defined value.binding, @binding
     @binding     = [].concat(@binding).filter(Boolean)
-    @enabled     = defined opts.enabled, @enabled, true
-    @readonly    = defined opts.readonly, @readonly, false
-    @hidden      = defined opts.hidden, @hidden, false
+    @readonly    = defined value.readonly, @readonly, false
+    @options     = defined value.options, @options
 
     @binding.push null  while @binding.length < 2
 
@@ -41,9 +40,8 @@ class Model extends events.EventEmitter
     name        : @name
     description : @description
     binding     : @binding
-    enabled     : @enabled
     readonly    : @readonly
-    hidden      : @hidden
+    options     : @options
 
   getWinKeys:     -> @binding[0]
   getMacKeys:     -> @binding[1]

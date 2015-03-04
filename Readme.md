@@ -1,6 +1,6 @@
 # keyconfig
 
-stores shortcut configuration sets.
+stores shortcut definitions.
 
 # usage
 
@@ -13,63 +13,58 @@ var keyconfig = new Keyconfig({
     } 
   ]
 });
+
+keyconfig.on('change', function (collection, model) { });
+
+keyconfig.find({ name: 'x '}).find({ name: 'foo' }).update({ readonly: true });
+
 ```
 
-# configuration spec
+# spec
 
-A configuration object has keymap sets (`Collection`) defined at top-level which each of them includes keymap (`Model`) definitions.
-
-```
-{
-  "editor": [ ... ],
-  "terminal": [ ... ]
-}
-```
-
-Below is an example of a keymap definition:
+Below is an example of a shortcut definition that belongs to `editor` set.
 
 ```json
 {
-  "name": "save",
-  "description": "Save",
-  "binding": [
-    [ "ctrl+s" ],
-    [ "command+s" ]
-  ],
-  "readonly": false
+  "editor":
+  [
+    {
+      "name": "save",
+      "description": "Save",
+      "binding": [
+        [ "ctrl+s" ],
+        [ "command+s" ]
+      ],
+      "readonly": false
+    }
+  ]
 }
 ```
 
 ### .name
 
-A keymap must have a unique name within the set it belongs to.
+A shortcut must have a unique name within the set it belongs to.
 
 ### .description
 
-A keymap must provide a description property, but this is optional indeed since not all key bindings are going to be displayed in ui. In that case make sure you have passed `null` instead of an empty string or not defining it at all, and make sure you have set `hidden` true.
-
 ### .binding
 
-Binding is an array of two arrays which define Windows and OSX key-sequences respectively. A keymap must have a binding property even if it doesn't have its defaults defined. In that case make sure you have passed `null` (eg `"binding": [null, ["ctrl+z"]]`)
+Binding is an array of two arrays which define Windows and OSX key sequences respectively.
 
 ### .readonly
 
-If a keymap is set as read-only, keyconfig will throw an error if it finds a collision within the collection it belongs to. (default: `false`)
+When set, keyconfig will throw an error if it encounters a binding collision; otherwise it will omit latter binding and silently resolve the collision.
 
 # api
 
-# Keyconfig(defaults={})
-
-Proxies [underscore](http://underscorejs.org) methods.
+# keyconfig(collections={})
 
 # Collection(name, models=[])
 
 ## .add(model)
 ## .toJSON()
 
-Proxies [underscore](http://underscorejs.org) methods.
-
-# Model(opts={})
+# Model(value={})
 
 ## .update(value={})
 ## .getWinKeys()
@@ -77,6 +72,9 @@ Proxies [underscore](http://underscorejs.org) methods.
 ## .getWinChecksum()
 ## .getMacChecksum()
 ## .toJSON()
+
+* `Keyconfig` and `Collection` instances also proxy underscore methods.
+* Updating a model triggers `change` event that bubble up.
 
 # license
 
