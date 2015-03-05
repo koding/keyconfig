@@ -1,0 +1,36 @@
+{
+  "name": "keyconfig",
+  "version": "0.3.2",
+  "description": "stores keyboard shortcut definitions",
+  "main": "build/lib/index.js",
+  "dependencies": {
+    "defined": "^0.0.0",
+    "inherits-underscore": "^0.1.0",
+    "nub": "^1.0.0",
+    "keycode-checksum": "^0.1.0",
+    "xtend": "^4.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.1.0",
+    "should": "^5.0.1",
+    "coffee-script": "^1.8.0"
+  },
+  "scripts": {
+    "test": "make test",
+    "prepublish": "make all"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/koding/keyconfig.git"
+  },
+  "keywords": [
+    "keyhub",
+    "keyboard",
+    "shortcut"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/koding/keyconfig/issues"
+  },
+  "homepage": "https://github.com/koding/keyconfig"
+}
