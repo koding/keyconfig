@@ -1,6 +1,5 @@
 events   = require 'events'
 checksum = require 'keycode-checksum'
-xtend    = require 'xtend'
 defined  = require 'defined'
 nub      = require 'nub'
 
