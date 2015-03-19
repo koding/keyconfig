@@ -17,6 +17,7 @@ class Keyconfig extends events.EventEmitter
 
 
   add: (name, models) ->
+
     collection = new Collection name, models
     collection.on 'change', (model) =>
       @emit 'change', collection, model
