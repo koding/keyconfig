@@ -18,7 +18,7 @@ class Model extends events.EventEmitter
     super()
 
 
-  update: (value) ->
+  update: (value, silent=no) ->
 
     @description = defined value.description, @description, null
     @binding     = defined value.binding, @binding
@@ -31,7 +31,7 @@ class Model extends events.EventEmitter
     @binding = @binding.map (x) ->
       return nub [].concat(x).filter(Boolean)
 
-    @emit 'change'
+    @emit 'change' unless silent
 
     return this
 
