@@ -12,7 +12,7 @@ class Collection extends events.EventEmitter
 
     throw new Error 'missing name'  unless name
 
-    @name = name
+    @name   = name
     @models = []
 
     [].concat(models).filter(Boolean).forEach (x) =>
@@ -30,7 +30,11 @@ class Collection extends events.EventEmitter
     sumMethodName  = "get#{platform}Checksum"
     keysMethodName = "get#{platform}Keys"
 
-    list = @chain().invoke(sumMethodName).flatten().without(undefined, null)
+    list = @chain()
+      .reject name: model.name
+      .invoke(sumMethodName)
+      .flatten()
+      .without(undefined, null)
 
     checksum = model[sumMethodName]()
 
@@ -62,12 +66,26 @@ class Collection extends events.EventEmitter
   add: (model) ->
 
     model = new Model model  unless model instanceof Model
-    model.update binding: @_validateBindings(model), yes
-
-    model.on 'change', =>
-      @emit 'change', model
+    model
+      .on 'change', =>
+        @emit 'change', model
+      .update binding: @_validateBindings(model), yes
 
     @models.push model
+
+    return this
+
+
+  update: (name, value={}, silent=no) ->
+
+    # updates a model in this collection, not the collection itself
+
+    model = @find name: name
+    throw new Error "#{name} not found" unless model instanceof Model
+
+    model
+      .update value, yes
+      .update binding: @_validateBindings(model), silent
 
     return this
 
