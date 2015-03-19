@@ -1,4 +1,12 @@
 
+0.4.0 / 2015-03-19
+==================
+
+ * add collection#update
+ * do not override model when validating
+ * allow keeping model updates quiet
+ * Merge branch '0.3.x'
+
 0.3.1 / 2015-03-04
 ==================
 
