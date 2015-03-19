@@ -9,6 +9,7 @@ class Keyconfig extends events.EventEmitter
   inherits_ Keyconfig::
 
   constructor: (defaults={}) ->
+
     @models = []
     (@add name, models for name, models of defaults)
 

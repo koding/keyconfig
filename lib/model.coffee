@@ -37,15 +37,21 @@ class Model extends events.EventEmitter
 
 
   toJSON: ->
+
     name        : @name
     description : @description
     binding     : @binding
     readonly    : @readonly
     options     : @options
 
+
   getWinKeys:     -> @binding[0]
+
   getMacKeys:     -> @binding[1]
 
+
   # XXX: cache
+
   getWinChecksum: -> checksum @binding[0]
+
   getMacChecksum: -> checksum @binding[1]

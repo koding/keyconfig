@@ -14,13 +14,13 @@ class Collection extends events.EventEmitter
 
     @name = name
     @models = []
-    
+
     [].concat(models).filter(Boolean).forEach (x) =>
       @add x
 
     super()
 
-  
+
   _findCollisions: (model, platform) ->
 
     methodName = "get#{platform}Checksum"
@@ -48,13 +48,13 @@ class Collection extends events.EventEmitter
 
 
   _validate: (model) ->
-    
+
     @_findCollisions model, 'Win'
     @_findCollisions model, 'Mac'
 
     return model
 
-  
+
   add: (model) ->
 
     model = new Model model  unless model instanceof Model
@@ -65,6 +65,7 @@ class Collection extends events.EventEmitter
 
     return this
 
-  
+
   toJSON: ->
+
     return this.map (x) -> return x.toJSON()
