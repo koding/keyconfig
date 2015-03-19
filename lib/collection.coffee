@@ -21,47 +21,53 @@ class Collection extends events.EventEmitter
     super()
 
 
-  _findCollisions: (model, platform) ->
+  _stripCollidingBindings: (model, platform) ->
 
-    methodName = "get#{platform}Checksum"
+    # This method *throws if given model is readonly* and one of its bindings is
+    # already defined in this collection.
+    # *Otherwise it returns valid keys* for the given platform.
 
-    list = @chain().invoke(methodName).flatten().without(undefined, null)
+    sumMethodName  = "get#{platform}Checksum"
+    keysMethodName = "get#{platform}Keys"
 
-    checksum = model[methodName]()
+    list = @chain().invoke(sumMethodName).flatten().without(undefined, null)
+
+    checksum = model[sumMethodName]()
+
     collisions = list.intersection(checksum).value()
 
+    keys = model[keysMethodName]()
+
     if collisions.length
-      if model.readonly then  throw new Error  "dup: #{model.name}"
+
+      if model.readonly then throw new Error "dup: #{model.name}"
       else
         collisions = collisions.map (x) ->
           return checksum.indexOf x
 
-        binding = model.binding
-
-        ix = if platform is 'Win' then 0 else 1
-        binding[ix] = binding[ix].filter (x, i) ->
+        keys = keys.filter (x, i) ->
           return !~collisions.indexOf i
 
-        model.update binding: binding
+        return keys
 
-      return model
+    return keys
 
 
-  _validate: (model) ->
+  _validateBindings: (model) ->
 
-    @_findCollisions model, 'Win'
-    @_findCollisions model, 'Mac'
-
-    return model
+    return ['Win', 'Mac'].map (platform) =>
+      @_stripCollidingBindings model, platform
 
 
   add: (model) ->
 
     model = new Model model  unless model instanceof Model
+    model.update binding: @_validateBindings(model), yes
+
     model.on 'change', =>
       @emit 'change', model
 
-    @models.push(@_validate model)
+    @models.push model
 
     return this
 
