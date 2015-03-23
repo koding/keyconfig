@@ -1,6 +1,6 @@
 {
   "name": "keyconfig",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "stores keyboard shortcut definitions",
   "main": "build/lib/index.js",
   "dependencies": {
@@ -24,9 +24,8 @@
     "url": "https://github.com/koding/keyconfig.git"
   },
   "keywords": [
-    "keyhub",
-    "keyboard",
-    "shortcut"
+    "shortcuts",
+    "keyboard"
   ],
   "license": "MIT",
   "bugs": {
