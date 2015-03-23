@@ -2,6 +2,7 @@ events   = require 'events'
 checksum = require 'keycode-checksum'
 defined  = require 'defined'
 nub      = require 'nub'
+xtend    = require 'xtend'
 
 module.exports =
 
@@ -23,7 +24,10 @@ class Model extends events.EventEmitter
     @binding     = defined value.binding, @binding
     @binding     = [].concat(@binding)[..1]
     @readonly    = defined value.readonly, @readonly, false
-    @options     = defined value.options, @options
+    @options     = defined @options
+
+    if 'object' is typeof value.options
+      @options = xtend @options, value.options
 
     @binding.push null  while @binding.length < 2
 
