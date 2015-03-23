@@ -7,7 +7,8 @@
     "defined": "^0.0.0",
     "inherits-underscore": "^0.1.0",
     "keycode-checksum": "^0.1.0",
-    "nub": "^1.0.0"
+    "nub": "^1.0.0",
+    "xtend": "^4.0.0"
   },
   "devDependencies": {
     "mocha": "^2.1.0",
