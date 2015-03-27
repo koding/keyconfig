@@ -1,7 +1,0 @@
-{
-  "collection": [
-    { "name": "x", "binding": [ ["a+b"], [ "c+d" ] ] },
-    { "name": "y", "binding": [ ["c+d", "g+h+j+d" ], [ "b+a" ] ] },
-    { "name": "z", "binding": [ ["z+x", "a+b", "j+h+d+g" ], [ "a+b", "d+c" ] ] }
-  ]
-}

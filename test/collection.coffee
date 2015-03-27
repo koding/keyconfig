@@ -16,9 +16,12 @@ describe 'Collection', ->
 
   it 'should omit dups', ->
 
-    fixture = require './omit-dups.json'
+    collection = new Collection 'x', [
+      { name: 'x', binding: [ [ 'a+b' ], ['c+d' ] ] }
+      { name: 'y', binding: [ [ 'c+d', 'g+h+j+d' ], [ 'b+a' ] ] }
+      { name: 'z', binding: [ [ 'z+x', 'a+b', 'j+h+d+g' ], [ 'a+b', 'd+c' ] ] }
+    ]
 
-    collection = new Collection 'x', fixture.collection
     collection.models[2].binding.should.eql [[ 'z+x' ], [] ]
     collection.models[2].getWinChecksum().should.have.lengthOf 1
     collection.models[2].getMacChecksum().should.have.lengthOf 0
@@ -26,13 +29,16 @@ describe 'Collection', ->
 
   it 'should throw readonly dups', ->
 
-    fixture = require './throw-readonly-dups.json'
+    fixture = [
+      { name: 'a', binding: [ [ 'a+b' ], [ 'c+d' ] ] }
+      { name: 'b', binding: [ [ 'c+d' ], [ 'a+b' ] ], 'readonly': true }
+      { name: 'c', binding: [ [ 'b+a' ] ], 'readonly': true }
+    ]
 
     collection = new Collection 'x'
-    collection.add fixture.models[0]
-    collection.add fixture.models[1]
-
-    collection.add.bind(collection, (fixture.models[2])).should.throw /dup/
+    collection.add fixture[0]
+    collection.add fixture[1]
+    collection.add.bind(collection, (fixture[2])).should.throw /dup/
 
   it 'should update a model given by its name', (done) ->
 

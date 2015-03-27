@@ -1,7 +1,0 @@
-{
-  "models": [
-    { "name": "a", "binding": [ [ "a+b" ], [ "c+d" ] ] },
-    { "name": "b", "binding": [ [ "c+d" ], [ "a+b" ] ], "readonly": true },
-    { "name": "c", "binding": [ [ "b+a" ] ], "readonly": true }
-  ]
-}
