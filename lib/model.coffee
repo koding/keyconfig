@@ -1,8 +1,7 @@
 events   = require 'events'
 checksum = require 'keycode-checksum'
 defined  = require 'defined'
-nub      = require 'nub'
-xtend    = require 'xtend'
+_        = require 'lodash'
 
 module.exports =
 
@@ -27,12 +26,12 @@ class Model extends events.EventEmitter
     @options     = defined @options
 
     if 'object' is typeof value.options
-      @options = xtend @options, value.options
+      @options = _.extend {}, @options, value.options
 
     @binding.push null  while @binding.length < 2
 
     @binding = @binding.map (x) ->
-      return nub [].concat(x).filter(Boolean)
+      return _.uniq [].concat(x).filter(Boolean)
 
     @emit 'change' unless silent
 
