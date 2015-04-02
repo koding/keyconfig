@@ -1,14 +1,14 @@
 events   = require 'events'
-checksum = require 'keycode-checksum'
 defined  = require 'defined'
 _        = require 'lodash'
+checksum = require 'keycode-checksum'
+checksum = _.memoize checksum
 
 module.exports =
 
 class Model extends events.EventEmitter
 
   constructor: (value={}) ->
-
     throw new Error 'missing name'  unless value.name
 
     @name = value.name
@@ -51,8 +51,6 @@ class Model extends events.EventEmitter
 
   getMacKeys:     -> @binding[1]
 
-
-  # XXX: cache
 
   getWinChecksum: -> checksum @binding[0]
 
