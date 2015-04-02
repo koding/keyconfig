@@ -5,7 +5,7 @@
   "main": "build/lib/index.js",
   "dependencies": {
     "defined": "^0.0.0",
-    "inherits-underscore": "^0.1.0",
+    "inherits-underscore": "^0.2.0",
     "keycode-checksum": "^0.1.0",
     "nub": "^1.0.0",
     "xtend": "^4.0.0"
