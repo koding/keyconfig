@@ -58,7 +58,7 @@ class Collection extends events.EventEmitter
 
     model = @find name: name
     throw new Error "#{name} not found" unless model instanceof Model
-    model.update value
+    model.update value, silent
     return this
 
 
