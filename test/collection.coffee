@@ -6,13 +6,16 @@ describe 'Collection', ->
 
   it 'should proxy underscore methods', ->
 
-    fixture = require './proxy-underscore.json'
+    models = [
+      { name: 'x', description: '551' }
+      { name: 'y' }
+    ]
 
-    collection = new Collection 'x', fixture.models
+    collection = new Collection 'x', models
 
-    foo = collection.filter readonly: yes
+    foo = collection.filter name: 'x'
     foo.should.have.lengthOf 1
-    foo[0].name.should.eql 'x'
+    foo[0].description.should.eql '551'
 
   it 'should omit dups', ->
 
@@ -26,19 +29,6 @@ describe 'Collection', ->
     collection.models[2].getWinChecksum().should.have.lengthOf 1
     collection.models[2].getMacChecksum().should.have.lengthOf 0
     collection.models[2].getWinChecksum().should.eql checksum ['x+z']
-
-  it 'should throw readonly dups', ->
-
-    fixture = [
-      { name: 'a', binding: [ [ 'a+b' ], [ 'c+d' ] ] }
-      { name: 'b', binding: [ [ 'c+d' ], [ 'a+b' ] ], 'readonly': true }
-      { name: 'c', binding: [ [ 'b+a' ] ], 'readonly': true }
-    ]
-
-    collection = new Collection 'x'
-    collection.add fixture[0]
-    collection.add fixture[1]
-    collection.add.bind(collection, (fixture[2])).should.throw /dup/
 
   it 'should update a model given by its name', (done) ->
 

@@ -15,17 +15,13 @@ class Collection extends events.EventEmitter
     @name   = name
     @models = []
 
-    [].concat(models).filter(Boolean).forEach (x) =>
-      @add x
+    [].concat(models).filter(Boolean).forEach (model) =>
+      @add model
 
     super()
 
 
   _stripCollidingBindings: (model, platform) ->
-
-    # This method *throws if given model is readonly* and one of its bindings is
-    # already defined in this collection.
-    # *Otherwise it returns valid keys* for the given platform.
 
     sumMethodName  = "get#{platform}Checksum"
     keysMethodName = "get#{platform}Keys"
@@ -43,16 +39,11 @@ class Collection extends events.EventEmitter
     keys = model[keysMethodName]()
 
     if collisions.length
+      collisions = collisions.map (x) ->
+        return checksum.indexOf x
 
-      if model.readonly then throw new Error "dup: #{model.name}"
-      else
-        collisions = collisions.map (x) ->
-          return checksum.indexOf x
-
-        keys = keys.filter (x, i) ->
-          return !~collisions.indexOf i
-
-        return keys
+      keys = keys.filter (x, i) ->
+        return !~collisions.indexOf i
 
     return keys
 
@@ -67,8 +58,7 @@ class Collection extends events.EventEmitter
 
     model = new Model model  unless model instanceof Model
     model
-      .on 'change', =>
-        @emit 'change', model
+      .on 'change', => @emit 'change', model
       .update binding: @_validateBindings(model), yes
 
     @models.push model
@@ -77,8 +67,6 @@ class Collection extends events.EventEmitter
 
 
   update: (name, value={}, silent=no) ->
-
-    # updates a model in this collection, not the collection itself
 
     model = @find name: name
     throw new Error "#{name} not found" unless model instanceof Model
@@ -90,6 +78,4 @@ class Collection extends events.EventEmitter
     return this
 
 
-  toJSON: ->
-
-    return this.map (x) -> return x.toJSON()
+  toJSON: -> @map (model) -> model.toJSON()

@@ -9,20 +9,21 @@ var keyconfig = new Keyconfig({
   x: [ 
     { 
       name: 'foo', 
-      binding: [ [ 'ctrl+z' ], [ 'cmd+z' ] ]
+      binding: [ [ 'ctrl+z' ], [ 'command+z' ] ]
     } 
   ]
 });
 
-keyconfig.on('change', function (collection, model) { });
-
-keyconfig.find({ name: 'x '}).find({ name: 'foo' }).update({ readonly: true });
-
+keyconfig
+  .on('change', function (collection, model) { });
+  .find({ name: 'x '})
+  .find({ name: 'foo' })
+  .update({ binding: ['command+d'] });
 ```
 
 # spec
 
-Below is an example of a shortcut definition that belongs to `editor` set.
+Below is an example of a collection:
 
 ```json
 {
@@ -35,25 +36,20 @@ Below is an example of a shortcut definition that belongs to `editor` set.
         [ "ctrl+s" ],
         [ "command+s" ]
       ],
-      "readonly": false
+      "options": {
+        "enabled": true
+      }
     }
   ]
 }
 ```
 
-### .name
+### fields
 
-A shortcut must have a unique name within the set it belongs to.
-
-### .description
-
-### .binding
-
-Binding is an array of two arrays which define Windows and OSX key sequences respectively.
-
-### .readonly
-
-When set, keyconfig will throw an error if it encounters a binding collision; otherwise it will omit latter binding and silently resolve the collision.
+- `name` must be unique
+- `binding` is an array of two arrays that defines win and mac shortcuts respectively
+- `description` is description text
+- `options` is always extended when you do `update`
 
 # api
 
@@ -75,7 +71,7 @@ When set, keyconfig will throw an error if it encounters a binding collision; ot
 ## .getMacChecksum()
 ## .toJSON()
 
-Updating a model triggers `change` event that bubble up.
+Updating a model triggers a `change` event that bubble up.
 
 # license
 

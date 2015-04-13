@@ -4,9 +4,11 @@ describe 'Keyconfig', ->
 
   it 'should proxy underscore methods', ->
 
-    fixture = require './proxy-underscore.json'
+    collections =
+      x: [ { name: 'x0' } ]
+      y: [ { name: 'y0'}, { name: 'y1' } ]
 
-    bar = new Keyconfig fixture.collections
+    bar = new Keyconfig collections
     baz = bar.filter name: 'y'
 
     baz.should.have.lengthOf 1
@@ -16,7 +18,7 @@ describe 'Keyconfig', ->
 
     foo = new Keyconfig
       x: [
-        { name: 'qux' }
+        { name: 'qux', description: '551' }
         { name: 'quux', binding: [ ['e+f'], null ] }
       ]
 
@@ -24,10 +26,10 @@ describe 'Keyconfig', ->
     qux = x[0].filter name: 'qux'
 
     foo.once 'change', (collection, model) ->
-      model.readonly.should.eql yes
+      model.description.should.eql '555'
 
-    qux[0].readonly.should.eql no
-    qux[0].update readonly: true
+    qux[0].description.should.eql '551'
+    qux[0].update description: '555'
 
     foo.once 'change', (collection, model) ->
       model.getWinKeys().should.eql ['e+f']
