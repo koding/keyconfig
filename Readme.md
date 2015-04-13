@@ -58,13 +58,16 @@ Below is an example of a collection:
 # Collection(name, models=[])
 
 ## .add(model)
+## .update(name, value={}, silent=false)
 ## .toJSON()
+## .getCollidingWin()
+## .getCollidingMac()
 
 `Keyconfig` and `Collection` instances also proxy underscore methods.
 
 # Model(value={})
 
-## .update(value={})
+## .update(value={}, silent=false)
 ## .getWinKeys()
 ## .getMacKeys()
 ## .getWinChecksum()
