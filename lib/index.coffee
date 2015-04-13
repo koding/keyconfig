@@ -23,3 +23,5 @@ class Keyconfig extends events.EventEmitter
       @emit 'change', collection, model
 
     @models.push collection
+    
+    return this

@@ -13,6 +13,7 @@ class Model extends events.EventEmitter
     throw new Error 'missing name'  unless value.name
 
     @name = value.name
+
     @update value
 
     super()
@@ -20,21 +21,18 @@ class Model extends events.EventEmitter
 
   update: (value, silent=no) ->
 
+    @binding = defined value.binding, @binding
+    @binding = [].concat(@binding)[..1]
+    @options = defined @options
     @description = defined value.description, @description, null
-    @binding     = defined value.binding, @binding
-    @binding     = [].concat(@binding)[..1]
-    @options     = defined @options
 
-    if 'object' is typeof value.options
+    if _.isObject value.options
       @options = _.extend {}, @options, value.options
 
     @binding.push null  while @binding.length < 2
-
-    @binding = @binding.map (seq) ->
-      return _.uniq [].concat(seq).filter(Boolean)
+    @binding = @binding.map (seq) -> _.uniq [].concat(seq).filter(Boolean)
 
     @emit 'change' unless silent
-
     return this
 
 
@@ -44,7 +42,6 @@ class Model extends events.EventEmitter
     description : @description
     binding     : @binding
     options     : @options
-
 
   getWinKeys: -> @binding[0]
   getMacKeys: -> @binding[1]

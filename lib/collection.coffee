@@ -1,6 +1,7 @@
 events    = require 'events'
 inherits_ = require 'inherits-underscore'
 Model     = require './model'
+_ = require 'lodash'
 
 module.exports =
 
@@ -12,55 +13,42 @@ class Collection extends events.EventEmitter
 
     throw new Error 'missing name'  unless name
 
-    @name   = name
+    @name = name
     @models = []
-
     [].concat(models).filter(Boolean).forEach (model) =>
       @add model
 
     super()
 
 
-  _stripCollidingBindings: (model, platform) ->
+  _getColliding: (platform) ->
 
-    sumMethodName  = "get#{platform}Checksum"
-    keysMethodName = "get#{platform}Keys"
+    sumMethodName = "get#{platform}Checksum"
 
-    list = @chain()
-      .reject name: model.name
-      .invoke(sumMethodName)
-      .flatten()
-      .without(undefined, null)
+    groups = {}
 
-    checksum = model[sumMethodName]()
+    @each (model) ->
+      sums = model[sumMethodName]()
+      sums.forEach (sum) ->
+        groups[sum] = [].concat(groups[sum]).filter(Boolean).concat model
 
-    collisions = list.intersection(checksum).value()
-
-    keys = model[keysMethodName]()
-
-    if collisions.length
-      collisions = collisions.map (x) ->
-        return checksum.indexOf x
-
-      keys = keys.filter (x, i) ->
-        return !~collisions.indexOf i
-
-    return keys
+    _.filter groups, (group) ->
+      group.length > 1
 
 
-  _validateBindings: (model) ->
+  getCollidingWin: -> @_getColliding 'Win'
 
-    return ['Win', 'Mac'].map (platform) =>
-      @_stripCollidingBindings model, platform
+  getCollidingMac: -> @_getColliding 'Mac'
 
 
   add: (model) ->
 
     model = new Model model  unless model instanceof Model
-    model
-      .on 'change', => @emit 'change', model
-      .update binding: @_validateBindings(model), yes
 
+    exists = @find name: model.name
+    throw 'dup' if exists
+
+    model.on 'change', => @emit 'change', model
     @models.push model
 
     return this
@@ -70,11 +58,7 @@ class Collection extends events.EventEmitter
 
     model = @find name: name
     throw new Error "#{name} not found" unless model instanceof Model
-
-    model
-      .update value, yes
-      .update binding: @_validateBindings(model), silent
-
+    model.update value
     return this
 
 
