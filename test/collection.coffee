@@ -1,6 +1,7 @@
 Collection = require '../lib/collection'
 Model = require '../lib/model'
 checksum = require 'keycode-checksum'
+assert = require 'assert'
 
 describe 'Collection', ->
 
@@ -14,8 +15,9 @@ describe 'Collection', ->
     collection = new Collection 'x', models
 
     foo = collection.filter name: 'x'
-    foo.should.have.lengthOf 1
-    foo[0].description.should.eql '551'
+
+    assert.equal foo.length, 1
+    assert.equal foo[0].description, '551'
 
   it 'should get colliding bindings', ->
 
@@ -25,9 +27,10 @@ describe 'Collection', ->
     c.add name: 'z', binding: [['ctrl+z', 'ctrl+w']]
 
     collisions = c.getCollidingWin()
-    collisions.should.have.lengthOf 1
-    collisions[0][0].name.should.eql 'x'
-    collisions[0][1].name.should.eql 'y'
+
+    assert.equal collisions.length, 1
+    assert.equal collisions[0][0].name, 'x'
+    assert.equal collisions[0][1].name, 'y'
 
     c = new Collection 'x'
     c.add name: 'x', binding: [null, ['ctrl+x']]
@@ -35,53 +38,48 @@ describe 'Collection', ->
     c.add name: 'z', binding: [null, ['ctrl+z', 'ctrl+w']]
 
     collisions = c.getCollidingMac()
-    collisions.should.have.lengthOf 1
-    collisions[0][0].name.should.eql 'x'
-    collisions[0][1].name.should.eql 'y'
+
+    assert.equal collisions.length, 1
+    assert.equal collisions[0][0].name, 'x'
+    assert.equal collisions[0][1].name, 'y'
 
     c = new Collection 'x'
     c.add name: 'x'
     c.add name: 'y'
     collisions = c.getCollidingWin()
-    collisions.should.have.lengthOf 0
+
+    assert.equal collisions.length, 0
 
     c = new Collection 'x'
     c.add name: 'x', binding: [['a', null]]
     c.add name: 'y', binding: [['b', null]]
+
     collisions = c.getCollidingMac()
-    collisions.should.have.lengthOf 0
+    assert.equal collisions.length, 0
+
     collisions = c.getCollidingWin()
-    collisions.should.have.lengthOf 0
+    assert.equal collisions.length, 0
 
     c = new Collection 'x'
     c.add name: 'x', binding: [['ctrl+y']]
     c.add (model = new Model name: 'y', binding: [['ctrl+y']])
     c.add name: 'z', binding: [['ctrl+y']]
     collisions = c.getCollidingWin()
-    collisions[0].should.have.lengthOf 3
+
+    assert.equal collisions[0].length, 3
 
     model.update binding: value: [['abc']]
     collisions = c.getCollidingWin()
-    collisions[0].should.have.lengthOf 2
+
+    # collisions[0].should.have.lengthOf 2
+    assert.equal collisions[0].length, 2
 
   it 'should throw if name is dup', ->
 
     c = new Collection 'x'
     c.add name: 'x'
-    c.add.bind(c, { name: 'x'}).should.throw
 
-  #it 'should omit dups', ->
-
-    #collection = new Collection 'x', [
-      #{ name: 'x', binding: [ [ 'a+b' ], ['c+d' ] ] }
-      #{ name: 'y', binding: [ [ 'c+d', 'g+h+j+d' ], [ 'b+a' ] ] }
-      #{ name: 'z', binding: [ [ 'z+x', 'a+b', 'j+h+d+g' ], [ 'a+b', 'd+c' ] ] }
-    #]
-
-    #collection.models[2].binding.should.eql [[ 'z+x' ], [] ]
-    #collection.models[2].getWinChecksum().should.have.lengthOf 1
-    #collection.models[2].getMacChecksum().should.have.lengthOf 0
-    #collection.models[2].getWinChecksum().should.eql checksum ['x+z']
+    assert.throws -> c.add { name: 'x' }
 
   it 'should update a model given by its name', (done) ->
 
@@ -94,10 +92,10 @@ describe 'Collection', ->
     collection.add model
 
     collection.on 'change', (expected) ->
-      expected.should.eql model
+      assert.deepEqual expected, model
       keys = model.getWinKeys()
-      keys.should.have.lengthOf 1
-      keys.should.eql ['y']
+      assert.equal keys.length, 1
+      assert.deepEqual keys, ['y']
       done()
 
     collection.update 'foo',
