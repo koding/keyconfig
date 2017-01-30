@@ -1,5 +1,5 @@
 events    = require 'events'
-inherits_ = require 'inherits-underscore'
+inherits_ = require '@koding/inherits-underscore'
 Model     = require './model'
 _ = require 'lodash'
 

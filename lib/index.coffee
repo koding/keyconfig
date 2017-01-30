@@ -1,5 +1,5 @@
 Collection = require './collection'
-inherits_  = require 'inherits-underscore'
+inherits_  = require '@koding/inherits-underscore'
 events     = require 'events'
 
 module.exports =
