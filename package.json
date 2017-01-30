@@ -1,6 +1,6 @@
 {
   "name": "keyconfig",
-  "version": "0.7.2",
+  "version": "0.8.0",
   "description": "stores keyboard shortcut definitions",
   "main": "build/lib/index.js",
   "dependencies": {
