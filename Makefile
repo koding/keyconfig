@@ -11,6 +11,13 @@ test:
 		--compilers coffee:coffee-script/register \
 		--bail
 
+test-watch:
+	@$(BIN)/mocha \
+		--reporter spec \
+		--compilers coffee:coffee-script/register \
+		--bail \
+		--watch
+
 build: clean $(TARGETS)
 
 build/%.js: %.coffee
