@@ -6,7 +6,6 @@ all: test build
 
 test:
 	@$(BIN)/mocha \
-		--require should \
 		--reporter spec \
 		--compilers coffee:coffee-script/register \
 		--bail

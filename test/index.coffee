@@ -1,4 +1,5 @@
 Keyconfig = require '../lib'
+assert = require 'assert'
 
 describe 'Keyconfig', ->
 
@@ -11,8 +12,8 @@ describe 'Keyconfig', ->
     bar = new Keyconfig collections
     baz = bar.filter name: 'y'
 
-    baz.should.have.lengthOf 1
-    baz[0].name.should.eql 'y'
+    assert.equal baz.length, 1
+    assert.equal baz[0].name, 'y'
 
   it 'should emit change', (done) ->
 
@@ -26,17 +27,18 @@ describe 'Keyconfig', ->
     qux = x[0].filter name: 'qux'
 
     foo.once 'change', (collection, model) ->
-      model.description.should.eql '555'
+      assert.equal model.description, '555'
 
-    qux[0].description.should.eql '551'
+    assert.equal qux[0].description, '551'
     qux[0].update description: '555'
 
     foo.once 'change', (collection, model) ->
-      model.getWinKeys().should.eql ['e+f']
-      model.getMacKeys().should.eql ['z+q', 'e+f']
-      quux[0].getMacChecksum().should.have.lengthOf 2
+      assert.deepEqual model.getWinKeys(), ['e+f']
+      assert.deepEqual model.getMacKeys(), ['z+q', 'e+f']
+      assert.equal quux[0].getMacChecksum().length, 2
       done()
 
     quux = x[0].filter name: 'quux'
-    quux[0].getMacChecksum().should.have.lengthOf 0
+    assert.equal quux[0].getMacChecksum().length, 0
+
     quux[0].update binding: [ ['e+f'], ['z+q', 'e+f'] ]
